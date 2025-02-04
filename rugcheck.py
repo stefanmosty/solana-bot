@@ -4,11 +4,17 @@ from colorama import Fore, Style
 import requests
 
 RUG_CHECK_URL = "https://api.rugcheck.xyz/v1/tokens/{}/report"
+
+# Establish the minimum amount of liquidity pool tokens that should be locked, 
+# the minimum percentage of liquidity pool tokens that should be locked, 
+# the maximum risk score, 
+# and the maximum percentage of tokens that a single holder should own.
 min_lp_locked_amount = 25000
 min_lp_locked_pct = 75
 max_risk_score = 501
 max_holder_pct = 30
 
+# Fetch the token data from the RugCheck API
 def fetch_token_data(token_address):
  
     try:
@@ -19,7 +25,7 @@ def fetch_token_data(token_address):
         print(f"Error fetching token data for {token_address}: {e}")
         return None
 
-
+# Check if the top holders of the token own a percentage of tokens that is less than the maximum allowed percentage.
 def check_top_holders(holders):
  
     if not holders:
@@ -35,7 +41,7 @@ def check_top_holders(holders):
     # print("Top holders check passed.")
     return True
 
-
+# Check if the liquidity pool tokens are burned by checking the amount of tokens locked, the percentage of tokens locked, and the locked status.
 def check_lp_burned(markets):
      if not markets:
         # print("No markets data found.")
@@ -58,7 +64,7 @@ def check_lp_burned(markets):
     # print("Liquidity pool tokens are not burned.")
      return False
 
-
+# Check if the risk score of the token is less than the maximum allowed risk score.
 def check_max_risk_score(data):
  
     risk_score = data.get('score', 0)
@@ -70,6 +76,7 @@ def check_max_risk_score(data):
     # print("Risk score check passed.")
     return True
 
+# Check if the token is a rug pull by performing all the checks.
 def check_token_is_not_rug(token_address):
  
     data = fetch_token_data(token_address)
@@ -89,6 +96,7 @@ def check_token_is_not_rug(token_address):
     # print("Token is not compliant with checks.")
     return False
 
+# Main function to check if a token is a rug pull or not.
 if __name__ == "__main__":
     token_address = ""
     is_valid = check_token_is_not_rug(token_address)

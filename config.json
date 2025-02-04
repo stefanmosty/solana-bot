@@ -1,0 +1,12 @@
+
+{
+    "filters": {
+      "min_liquidity_usd": 100000,
+      "min_price_usd": 0.0001,
+      "max_price_usd": 10.0
+    },
+    "telegram": {
+    "bot_token": "8198661419:AAEuMjDKXsyEWYu64YyMu6kvQVFZnfH-Sao",
+    "chat_id": "1047193934"
+  }
+  }
